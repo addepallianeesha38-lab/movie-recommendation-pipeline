@@ -36,7 +36,7 @@ def recommend_movies(merged, favorites, n=5):
         if movie not in matrix.columns:
             print("Skipping:", movie)
             continue
-        sim = matrix.corrwith(matrix[movie]).dropna().drop(movie, errors='ignore')
+        sim = matrix.corrwith(matrix[movie], min_periods=30).dropna().drop(movie, errors='ignore')
         for title, score in sim.sort_values(ascending=False).head(n).items():
             rows.append({
                 'date': str(datetime.date.today()),
